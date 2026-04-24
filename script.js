@@ -1,4 +1,13 @@
+/**
+ * ============================================================
+ * PORTFOLIO JAVASCRIPT — script.js
+ * Author : Saksak Christiian Rambe Purba
+ * Handles: Cursor, Navbar, Typing effect, Skills tabs,
+ *          Counter animation, Scroll reveal, Form submit
+ * ============================================================
+ */
 
+// ── CUSTOM CURSOR ─────────────────────────────────────────────
 const cursor         = document.getElementById('cursor');
 const cursorFollower = document.getElementById('cursorFollower');
 let mouseX = 0, mouseY = 0;
@@ -11,6 +20,7 @@ document.addEventListener('mousemove', (e) => {
   cursor.style.top  = mouseY + 'px';
 });
 
+// Smooth follower using requestAnimationFrame
 function animateFollower() {
   followerX += (mouseX - followerX) * 0.12;
   followerY += (mouseY - followerY) * 0.12;
@@ -20,6 +30,7 @@ function animateFollower() {
 }
 animateFollower();
 
+// Hover effect on interactive elements
 document.querySelectorAll('a, button, .skill-card, .project-card, .info-card, input, textarea').forEach(el => {
   el.addEventListener('mouseenter', () => {
     cursor.classList.add('hover');
@@ -32,6 +43,7 @@ document.querySelectorAll('a, button, .skill-card, .project-card, .info-card, in
 });
 
 
+// ── NAVBAR SCROLL ─────────────────────────────────────────────
 const navbar = document.getElementById('navbar');
 
 window.addEventListener('scroll', () => {
@@ -43,6 +55,7 @@ window.addEventListener('scroll', () => {
 });
 
 
+// ── HAMBURGER MENU ────────────────────────────────────────────
 const hamburger  = document.getElementById('hamburger');
 const mobileMenu = document.getElementById('mobileMenu');
 
@@ -62,11 +75,12 @@ document.querySelectorAll('.mob-link').forEach(link => {
 });
 
 
+// ── TYPING EFFECT ─────────────────────────────────────────────
 const roles = [
-  'Full Stack Developer',
-  'Java Developer',
-  'Frontend Engineer',
-  'UI/UX Enthusiast',
+  'Siswa SMK Programmer',
+  'Web Developer Pemula',
+  'Java Enthusiast',
+  'HTML & CSS Learner',
   'Problem Solver'
 ];
 let roleIndex = 0;
@@ -99,27 +113,26 @@ function typeEffect() {
 typeEffect();
 
 
+// ── SKILLS DATA ───────────────────────────────────────────────
 const skillsData = {
   frontend: [
-    { icon: '🌐', name: 'HTML5',       level: 'Expert',        pct: 95 },
-    { icon: '🎨', name: 'CSS3',        level: 'Expert',        pct: 92 },
-    { icon: '⚡', name: 'JavaScript',  level: 'Advanced',      pct: 88 },
-    { icon: '⚛️', name: 'React.js',    level: 'Intermediate',  pct: 75 },
-    { icon: '🎭', name: 'Bootstrap',   level: 'Advanced',      pct: 85 },
-    { icon: '💨', name: 'Tailwind',    level: 'Intermediate',  pct: 70 },
+    { icon: '🌐', name: 'HTML5',       level: 'Intermediate',  pct: 70 },
+    { icon: '🎨', name: 'CSS3',        level: 'Intermediate',  pct: 65 },
+    { icon: '⚡', name: 'JavaScript',  level: 'Intermediate',  pct: 60 },
+    { icon: '🎭', name: 'Bootstrap',   level: 'Intermediate',  pct: 60 },
   ],
   backend: [
-    { icon: '☕', name: 'Java',        level: 'Advanced',      pct: 85 },
-    { icon: '🐘', name: 'PostgreSQL',  level: 'Intermediate',  pct: 72 },
-    { icon: '🐬', name: 'MySQL',       level: 'Advanced',      pct: 80 },
+    { icon: '☕', name: 'Java',        level: 'Intermediate',  pct: 65 },
+    { icon: '🐬', name: 'MySQL',       level: 'Intermediate',  pct: 55 },
   ],
   tools: [
-    { icon: '🐙', name: 'Git & GitHub', level: 'Advanced',     pct: 88 },
-    { icon: '🖥️', name: 'VS Code',      level: 'Expert',       pct: 95 },
-    { icon: '🎨', name: 'Figma',        level: 'Intermediate', pct: 65 },
+    { icon: '🐙', name: 'Git & GitHub', level: 'Intermediate', pct: 60 },
+    { icon: '🖥️', name: 'VS Code',      level: 'Intermediate', pct: 70 },
+    { icon: '🎨', name: 'Figma',        level: 'Intermediate', pct: 50 },
   ]
 };
 
+// Render skills into grid
 function renderSkills(category) {
   const grid = document.getElementById('skillsGrid');
   grid.innerHTML = '';
@@ -138,11 +151,13 @@ function renderSkills(category) {
     grid.appendChild(card);
   });
 
+  // Animate progress bars after DOM is painted
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       document.querySelectorAll('.skill-fill').forEach(bar => {
         bar.style.width = bar.dataset.pct + '%';
       });
+      // Re-add cursor hover for new cards
       document.querySelectorAll('.skill-card').forEach(el => {
         el.addEventListener('mouseenter', () => {
           cursor.classList.add('hover');
@@ -157,6 +172,7 @@ function renderSkills(category) {
   });
 }
 
+// Tab switching
 const tabBtns = document.querySelectorAll('.tab-btn');
 tabBtns.forEach(btn => {
   btn.addEventListener('click', () => {
@@ -166,9 +182,11 @@ tabBtns.forEach(btn => {
   });
 });
 
+// Initial render
 renderSkills('frontend');
 
 
+// ── COUNTER ANIMATION ─────────────────────────────────────────
 function animateCounter(el) {
   const target   = parseInt(el.dataset.target, 10);
   const duration = 1800;
@@ -199,6 +217,7 @@ function checkCounters() {
 }
 
 
+// ── SCROLL REVEAL ─────────────────────────────────────────────
 const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
 
 function revealOnScroll() {
@@ -212,9 +231,11 @@ function revealOnScroll() {
 }
 
 window.addEventListener('scroll', revealOnScroll);
+// Trigger once on load for above-fold elements
 revealOnScroll();
 
 
+// ── SMOOTH ACTIVE NAV LINK ────────────────────────────────────
 const sections   = document.querySelectorAll('section[id]');
 const navLinks   = document.querySelectorAll('.nav-link');
 
@@ -234,6 +255,7 @@ function updateActiveNav() {
 window.addEventListener('scroll', updateActiveNav);
 
 
+// ── CONTACT FORM ──────────────────────────────────────────────
 const contactForm = document.getElementById('contactForm');
 const formSuccess = document.getElementById('formSuccess');
 
@@ -243,6 +265,7 @@ contactForm.addEventListener('submit', (e) => {
   btn.textContent = 'Mengirim...';
   btn.disabled = true;
 
+  // Simulate async send (replace with real API call)
   setTimeout(() => {
     contactForm.reset();
     btn.innerHTML = 'Kirim Pesan <span class="arrow">→</span>';
@@ -253,16 +276,19 @@ contactForm.addEventListener('submit', (e) => {
 });
 
 
+// ── DOWNLOAD CV BUTTON ────────────────────────────────────────
 document.getElementById('downloadCV')?.addEventListener('click', (e) => {
   e.preventDefault();
+  // Replace the href below with your actual CV file path
   const link = document.createElement('a');
-  link.href     = 'cv-aryan-pratama.pdf'; // 
+  link.href     = 'cv-aryan-pratama.pdf'; // ← ganti dengan path CV kamu
   link.download = 'CV-Saksak-Christiian-Rambe-Purba.pdf';
   link.click();
   alert('CV akan segera didownload! Pastikan file cv-saksak-rambe.pdf tersedia.');
 });
 
 
+// ── BACK TO TOP ───────────────────────────────────────────────
 document.getElementById('backTop')?.addEventListener('click', (e) => {
   e.preventDefault();
   window.scrollTo({ top: 0, behavior: 'smooth' });
